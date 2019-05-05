@@ -21,3 +21,11 @@
 example	DCD		0x0010070f
 numones FILL    4
 
+		adr		r2, example   ; get start address for number
+		LDR		r2, [r2]	    ; load number into r0
+		
+loop		MOVS		r2, r2, LSR #1  ; shift right by one so rightmost bit is in carry flag
+		ADC		r1,r1, #0		 ; increment when 1 is encountered
+		CMP		r2, #0		 ; check if finsihed with number
+		BNE		loop            ; keep shifting and checking rightmost bit until finsihed
+		end
